@@ -97,7 +97,6 @@ void LDR(FILE *file_info, folder_node *node) {
         fprintf(file_info, "EMPTY\n");
         // printf("EMPTY\n");
     }
-    free(node);
 }
 
 void traverse_folder(FILE *file_info, file_node *node) {
@@ -192,16 +191,17 @@ file_node *is_file_exist(char filename[]) {
 
 void remove_folder_node(folder_node *folder) {
     //独立该节点
-    if (folder->parent) {
-        folder->parent->child = folder->next_sibling;
-    } else if (folder->prev_sibling) {
+    folder->parent->child = folder->next_sibling;
+    if (folder->prev_sibling) {
         folder->prev_sibling->next_sibling = folder->next_sibling;
-        folder->next_sibling = NULL;
-        folder->prev_sibling = NULL;
     }
+    folder->next_sibling = NULL;
+    folder->prev_sibling = NULL;
+    folder->parent = NULL;
+
     //递归删除路径
     remove_folder(folder);
-    //释放节点
+    //递归释放节点
     free_folder_node(folder);
 }
 
@@ -249,17 +249,18 @@ void remove_file_node(file_node *file) {
 
 void remove_all_files(file_node *file) {
     while (file) {
+        printf("file_name:%s\n", file->filename);
         remove_file(file->filename);
         file = file->next_file;
     }
 }
 
 void remove_file(char filename[]) {
-    char tmp[PATH_MAX];
+    char tmp[PATH_MAX] = "";
     strcat(tmp, current_dir);
     strcat(tmp, SLASH);
     strcat(tmp, filename);
-    remove(tmp);
+    printf("%s %d\n", tmp, remove(tmp));
 }
 
 void free_file_node(file_node *file) {
@@ -271,7 +272,7 @@ void free_file_node(file_node *file) {
 
 void list_folder() {
     folder_node *child = current_folder->child;
-    printf("folder list:");
+    printf("folder_list:");
     if (child) {
         printf("%s", child->foldername);
         while (child->next_sibling) {
@@ -284,7 +285,7 @@ void list_folder() {
 
 void list_file() {
     file_node *file = current_folder->file;
-    printf("file list:");
+    printf("file_list:");
     if (file) {
         printf("%s", file->filename);
         while (file->next_file) {

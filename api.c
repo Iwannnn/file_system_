@@ -21,8 +21,8 @@ void _ls_() {
 }
 
 void _mkdir_(char foldername[]) {
-    printf("current_dir %s\n", current_dir);
-    if (is_folder_exist(foldername)) {
+    folder_node *folder = is_folder_exist(foldername);
+    if (folder) {
         printf("folder exist!\n");
         return;
     } else {
@@ -42,11 +42,11 @@ void _mkdir_(char foldername[]) {
 }
 
 void _rmdir_(char foldername[]) {
-    folder_node *remove_folder_node = is_folder_exist(foldername);
-    if (!remove_folder_node) {
+    folder_node *folder = is_folder_exist(foldername);
+    if (!folder) {
         printf("folder not exist!\n");
     } else {
-        remove_folder(remove_folder_node);
+        remove_folder_node(folder);
         save_filesystem();
     }
 }
@@ -99,19 +99,9 @@ int main() {
     init_filesystem();
     current_folder = root;
     strcpy(current_dir, "./disk");
-    // printf("-----------------------------\n");
-    // _ls_();
-    // printf("-----------------------------\n");
-    // _cd_("s1");
-    // _ls_();
-    // printf("-----------------------------\n");
-    // _cd_("..");
-    // _cd_("10086");
-    // _ls_();
-    // printf("-----------------------------\n");
     printf("-----------------------------\n");
-    _mkdir_("tessssdadast");
-    printf("-----------------------------\n");
-    _mkdir_("s1");
+    _ls_();
+    _rmdir_("s1");
+    _ls_();
     printf("-----------------------------\n");
 }
