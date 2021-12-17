@@ -52,6 +52,7 @@ void _rmdir_(char foldername[]) {
 }
 
 void _touch_(char filename[]) {
+    // strcpy(current_user, "test");
     if (is_file_exist(filename)) {
         printf("filename exist!\n");
     } else {
@@ -70,20 +71,35 @@ void _touch_(char filename[]) {
 }
 
 void _rm_(char filename[]) {
-    file_node *remove_file_node = is_file_exist(filename);
-    if (!remove_file_node) {
+    file_node *file = is_file_exist(filename);
+    if (!file) {
         printf("file not exist!\n");
     } else {
-        if (strcmp(filename, current_folder->file->filename)) { //文件头
-            current_folder->file = remove_file_node->next_file;
+        if ((strcmp(filename, current_folder->file->filename) == 0)) { //文件头
+            current_folder->file = file->next_file;
         } else {
-            remove_file_node->prev_file->next_file = remove_file_node->next_file;
+            file->prev_file->next_file = file->next_file;
         }
         remove_file(filename);
+        save_filesystem();
     }
 }
 
-void _chmod_(char filename[], int owner_mode, int other_mode);
+void _chmod_(char filename[], int owner_mode, int other_mode) {
+    file_node *file = is_file_exist(filename);
+    strcpy(current_user, file->username);
+    if (!file) {
+        printf("file not exist\n");
+    } else {
+        if (strcmp(current_user, file->username)) {
+            printf("permission denied!\n");
+        } else {
+            change_file_mode(file, other_mode, other_mode);
+        }
+    }
+}
+
+void _tree_();
 
 FILE *_open_(char filename[]);
 
@@ -101,7 +117,8 @@ int main() {
     strcpy(current_dir, "./disk");
     printf("-----------------------------\n");
     _ls_();
-    _rmdir_("s1");
+    _chmod_("bbb", 0, 0);
     _ls_();
     printf("-----------------------------\n");
+    save_filesystem();
 }

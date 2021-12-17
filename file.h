@@ -70,7 +70,7 @@ void list_folder();
 
 void list_file();
 
-void tree();
+void change_file_mode(file_node *file, int owner_mode, int other_mode);
 
 void read_file(char filename[]);
 

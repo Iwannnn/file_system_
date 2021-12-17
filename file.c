@@ -296,6 +296,12 @@ void list_file() {
     printf("\n");
 }
 
+void change_file_mode(file_node *file, int owner_mode, int other_mode) {
+    file->owner_mode = owner_mode;
+    file->other_mode = other_mode;
+    save_filesystem();
+}
+
 void read_file(char filename[]);
 
 void write_file(char filename[]);
