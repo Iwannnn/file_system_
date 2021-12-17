@@ -72,6 +72,12 @@ void list_file();
 
 void change_file_mode(file_node *file, int owner_mode, int other_mode);
 
+void print_tree(folder_node *node, int tab);
+
+void print_link(file_node *node, int tab);
+
+void print_format(char str[], int tab);
+
 void read_file(char filename[]);
 
 void write_file(char filename[]);

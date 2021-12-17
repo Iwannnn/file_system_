@@ -17,6 +17,8 @@ void _rm_(char filename[]);
 
 void _chmod_(char filename[], int owner_mode, int other_mode);
 
+void _tree_();
+
 FILE *_open_(char filename[]);
 
 void _cat_(char filename[]);

@@ -302,6 +302,38 @@ void change_file_mode(file_node *file, int owner_mode, int other_mode) {
     save_filesystem();
 }
 
+void print_tree(folder_node *node, int tab) {
+    if (strcmp(node->foldername, current_folder->foldername)) {
+        print_format(node->foldername, tab);
+    }
+    if (node->child) {
+        print_tree(node->child, tab + 1);
+    }
+    if (node->file) {
+        print_link(node->file, tab + 1);
+    }
+    if (strcmp(node->foldername, current_folder->foldername)) {
+        if (node->next_sibling) {
+            print_tree(node->next_sibling, tab);
+        }
+    }
+}
+void print_link(file_node *node, int tab) {
+    print_format(node->filename, tab);
+    while (node->next_file) {
+        node = node->next_file;
+        print_format(node->filename, tab);
+    }
+}
+
+void print_format(char str[], int tab) {
+    printf("│");
+    for (int i = 1; i < tab; i++) {
+        printf("   │");
+    }
+    printf("── %s\n", str);
+}
+
 void read_file(char filename[]);
 
 void write_file(char filename[]);

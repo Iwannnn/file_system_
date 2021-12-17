@@ -99,7 +99,10 @@ void _chmod_(char filename[], int owner_mode, int other_mode) {
     }
 }
 
-void _tree_();
+void _tree_() {
+    printf("%s\n", current_folder->foldername);
+    print_tree(current_folder, 0);
+}
 
 FILE *_open_(char filename[]);
 
@@ -117,7 +120,8 @@ int main() {
     strcpy(current_dir, "./disk");
     printf("-----------------------------\n");
     _ls_();
-    _chmod_("bbb", 0, 0);
+    _cd_("c1");
+    _tree_();
     _ls_();
     printf("-----------------------------\n");
     save_filesystem();
