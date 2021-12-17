@@ -104,25 +104,59 @@ void _tree_() {
     print_tree(current_folder, 0);
 }
 
-FILE *_open_(char filename[]);
-
-void _cat_(char filename[]);
-
-void _write_(char filename[]);
-
-void _excute_(char filename[]);
-
-void _close_(FILE *f);
-
-int main() {
-    init_filesystem();
-    current_folder = root;
-    strcpy(current_dir, "./disk");
-    printf("-----------------------------\n");
-    _ls_();
-    _cd_("c1");
-    _tree_();
-    _ls_();
-    printf("-----------------------------\n");
-    save_filesystem();
+FILE *_open_(char filename[]) {
+    file_node *file = is_file_exist(filename);
+    if (file == NULL) {
+        printf("file not exist!\n");
+        return NULL;
+    }
+    return fopen(filename, FILEINFO_READ_MODE);
 }
+
+void _cat_(char filename[]) {
+    char line[100] = "";
+    FILE *file = _open_(filename);
+    if (file) {
+        while (~fscanf(file, "%s", line)) {
+            printf("%s\n", line);
+        }
+        _close_(file);
+    }
+}
+
+void _write_(char filename[]) {
+    FILE *file = _open_(filename);
+    if (file) {
+        printf("You have permission to write the file.But there is nothing.\n");
+        _close_(file);
+    }
+}
+
+void _excute_(char filename[]) {
+    FILE *file = _open_(filename);
+    if (file) {
+        printf("You have permission to execute the file.But there is nothing.\n");
+        _close_(file);
+    }
+}
+
+void _close_(FILE *f) {
+    fclose(f);
+}
+
+// int main() {
+//     init_filesystem();
+//     current_folder = root;
+//     strcpy(current_dir, "./disk");
+//     printf("-----------------------------\n");
+//     _ls_();
+//     FILE *file = _open_("a");
+//     _cat_("a");
+//     _write_("a");
+//     _excute_("a");
+//     _close_(file);
+//      _tree_();
+//      _ls_();
+//     printf("-----------------------------\n");
+//     save_filesystem();
+// }
