@@ -130,6 +130,9 @@ FILE *_open_(char filename[]) {
     strcat(tmp, current_dir);
     strcat(tmp, SLASH);
     strcat(tmp, filename);
+    PRINT_FONT_YEL
+    printf("open file :%s\n", tmp);
+    PRINT_FONT_WHI
     return fopen(tmp, FILEINFO_READ_MODE);
 }
 
@@ -171,6 +174,9 @@ void _close_(FILE *f) {
         PRINT_FONT_WHI
         return;
     }
+    PRINT_FONT_YEL
+    printf("close file\n");
+    PRINT_FONT_WHI
     fclose(f);
 }
 

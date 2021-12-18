@@ -15,15 +15,13 @@ enum COMMAND {
     cat_,
     write_,
     excute_,
-    close_,
     login_,
     logout_,
     reg_,
     exit_,
     help_
 };
-char command_to_string[][10] = {"null", "cd",    "ls",     "mkdir", "rmdir", "touch",  "rm",  "chmod", "tree", "open",
-                                "cat",  "write", "excute", "close", "login", "logout", "reg", "exit",  "help"};
+extern char command_to_string[][10];
 
 int get_command(char string[]);
 

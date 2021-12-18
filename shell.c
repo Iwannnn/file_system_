@@ -1,4 +1,8 @@
 #include "shell.h"
+
+char command_to_string[][10] = {"null", "cd",  "ls",    "mkdir",  "rmdir", "touch",  "rm",  "chmod", "tree",
+                                "open", "cat", "write", "excute", "login", "logout", "reg", "exit",  "help"};
+
 int get_command(char string[]) {
     for (int i = 0; i < sizeof(command_to_string) / sizeof(command_to_string[0]); i++) {
         if ((strcmp(string, command_to_string[i]) == 0)) {
@@ -20,7 +24,8 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
             return SUCCESS;
         }
         if ((strcmp(file->username, current_user) == 0)) { // owner
-            if (command == cat_ || command == write_ || command == excute_) {
+
+            if (command == open_ || command == cat_ || command == write_ || command == excute_) {
                 if (rwx_permission(command, file->owner_mode)) {
                     return SUCCESS;
                 } else {
@@ -31,7 +36,7 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
                 }
             }
         } else { // other
-            if (command == cat_ || command == write_ || command == excute_) {
+            if (command == open_ || command == cat_ || command == write_ || command == excute_) {
                 if (rwx_permission(command, file->other_mode)) {
                     return SUCCESS;
                 } else {
@@ -53,7 +58,7 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
 }
 
 int rwx_permission(enum COMMAND command, int mode) {
-    if (command == cat_) {
+    if (command == cat_ || command == open_) {
         if (mode == 4 || mode == 5 || mode == 6 || mode == 7) {
             return SUCCESS;
         } else {
@@ -76,10 +81,10 @@ int rwx_permission(enum COMMAND command, int mode) {
 }
 
 void start() {
+    FILE *file = NULL;
     while (1) {
         char permission = (strcmp(current_user, "root") == 0) ? '#' : '$';
         char command[] = "";
-        FILE *file = NULL;
         enum COMMAND command_ = null_;
 
         // hint
@@ -210,7 +215,6 @@ void start() {
         case open_: {
             char filename[] = "";
             scanf("%s", filename);
-            check_line();
             if (!check_line()) {
                 PRINT_FONT_RED
                 COMMAND_FORMAT_ERROR
@@ -219,6 +223,7 @@ void start() {
             }
             if (!check_permission(filename, open_, permission)) break;
             file = _open_(filename);
+            _close_(file);
             break;
         }
         case cat_: {
@@ -258,16 +263,6 @@ void start() {
             }
             if (!check_permission(filename, excute_, permission)) break;
             _excute_(filename);
-            break;
-        }
-        case close_: {
-            if (!check_line()) {
-                PRINT_FONT_RED
-                COMMAND_FORMAT_ERROR
-                PRINT_FONT_WHI
-                break;
-            }
-            _close_(file);
             break;
         }
         case login_: {
@@ -350,11 +345,4 @@ int check_line() {
     }
     if (first) free(first);
     return SUCCESS;
-}
-
-int main() {
-    init_filesystem();
-    current_folder = root;
-    strcpy(current_dir, "./disk");
-    start();
 }
