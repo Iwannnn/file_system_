@@ -86,7 +86,6 @@ void start() {
         char permission = (strcmp(current_user, "root") == 0) ? '#' : '$';
         char command[] = "";
         enum COMMAND command_ = null_;
-
         // hint
         PRINT_FONT_GRE
         printf("%s@local:", current_user);
@@ -99,7 +98,7 @@ void start() {
         command_ = get_command(command);
         // printf("%s\n", command_to_string[command_]);
         // printf("%d\n", command_);
-        if (command_ != login_ && (strcmp(current_user, "") == 0)) {
+        if (command_ != login_ && command_ != help_ && (strcmp(current_user, "") == 0)) {
             PRINT_FONT_YEL
             printf("please login first!\n");
             PRINT_FONT_WHI

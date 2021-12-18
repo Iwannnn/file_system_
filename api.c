@@ -193,7 +193,25 @@ void _reg_(char username[], char password[]) {
 }
 
 void _help_() {
-    printf("there is nothing\n");
+    PRINT_FONT_YEL
+    printf("cd..\n");
+    printf("cd filename\n");
+    printf("ls\n");
+    printf("mkdir foldername\n");
+    printf("rmdir foldername\n");
+    printf("touch filename\n");
+    printf("rm filename\n");
+    printf("chmod filename owner_mode other_mode\n");
+    printf("tree\n");
+    printf("open filename\n");
+    printf("cat filename\n");
+    printf("write filename\n");
+    printf("excute filename\n");
+    printf("login username password\n");
+    printf("logout\n");
+    printf("reg username password\n");
+    printf("exit\n");
+    PRINT_FONT_WHI
 }
 
 // int main() {
