@@ -143,7 +143,7 @@ void _cat_(char filename[]) {
 void _write_(char filename[]) {
     FILE *file = _open_(filename);
     if (file) {
-        PRINT_FONT_RED
+        PRINT_FONT_YEL
         THERE_IS_NOTHING
         PRINT_FONT_WHI
         _close_(file);
@@ -153,7 +153,7 @@ void _write_(char filename[]) {
 void _excute_(char filename[]) {
     FILE *file = _open_(filename);
     if (file) {
-        PRINT_FONT_RED
+        PRINT_FONT_YEL
         THERE_IS_NOTHING
         PRINT_FONT_WHI
         _close_(file);
