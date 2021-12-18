@@ -55,16 +55,17 @@
 #define PRINT_ATTR_UGLI printf("\033[25m"); //关闭闪烁
 #define PRINT_ATTR_UREV printf("\033[27m"); //关闭反向图象
 
-#define PERMISSION_DENIED printf("permission denied!\n");                      //权限不足
-#define FILE_NOT_EXIST printf("file not exist!\n");                            //文件不存在
-#define FILE_ALREADY_EXIST printf("file already exist!\n");                    //文件已存在
-#define FOLDER_NOT_EXIST printf("folder not exist!\n");                        //文件夹不存在
-#define FOLDER_ALREADY_EXIST printf("folder already exist!\n");                //文件夹已存在
-#define COMMAND_ERROR printf("command not exist!you can use command help.\n"); //命令不存在或格式错误
-#define PWD_ERROR printf("password error!\n");                                 //密码错误
-#define USER_NOT_EXIST printf("user not exist!\n");                            //账号不存在
-#define USER_EXIST printf("username already exists!\n");                       //账号已存在
-#define ALREADY_LOGIN printf("already login!\n");                              //已经登录
+#define PERMISSION_DENIED printf("permission denied!\n");                                         //权限不足
+#define FILE_NOT_EXIST printf("file not exist!\n");                                               //文件不存在
+#define FILE_ALREADY_EXIST printf("file already exist!\n");                                       //文件已存在
+#define FOLDER_NOT_EXIST printf("folder not exist!\n");                                           //文件夹不存在
+#define FOLDER_ALREADY_EXIST printf("folder already exist!\n");                                   //文件夹已存在
+#define COMMAND_ERROR printf("command not exist!you can use command help.\n");                    //命令不存在
+#define COMMAND_FORMAT_ERROR printf("command format error!you can use command help.\n");          //命令格式错误
+#define PWD_ERROR printf("password error!\n");                                                    //密码错误
+#define USER_NOT_EXIST printf("user not exist!\n");                                               //账号不存在
+#define USER_EXIST printf("username already exists!\n");                                          //账号已存在
+#define ALREADY_LOGIN printf("already login!\n");                                                 //已经登录
 #define THERE_IS_NOTHING printf("You have permission to write the file.But there is nothing.\n"); //啥都没有
 
 extern const char *FOLDER_;

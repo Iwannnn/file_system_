@@ -120,13 +120,17 @@ void _tree_() {
 
 FILE *_open_(char filename[]) {
     file_node *file = is_file_exist(filename);
+    char tmp[PATH_MAX] = "";
     if (file == NULL) {
         PRINT_FONT_RED
         FILE_NOT_EXIST
         PRINT_FONT_WHI
         return NULL;
     }
-    return fopen(filename, FILEINFO_READ_MODE);
+    strcat(tmp, current_dir);
+    strcat(tmp, SLASH);
+    strcat(tmp, filename);
+    return fopen(tmp, FILEINFO_READ_MODE);
 }
 
 void _cat_(char filename[]) {

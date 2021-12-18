@@ -1,12 +1,10 @@
 FOLDER disk
-FILE a b 7 7
-FILE b b 1 1
+FILE a test 7 7
+FILE b test 1 1
 FILE bbb test 0 0
 FOLDER c1
 FILE b b 7 7
 FOLDER c2
-FOLDER c3
-EMPTY
 EMPTY
 EMPTY
 FOLDER s1

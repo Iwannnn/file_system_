@@ -33,4 +33,6 @@ int rwx_permission(enum COMMAND command, int mode);
 
 void start();
 
+int check_line();
+
 #endif

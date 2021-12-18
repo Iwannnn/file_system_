@@ -85,6 +85,7 @@ void start() {
         FILE *file = NULL;
         enum COMMAND command_ = null_;
 
+        // hint
         PRINT_FONT_GRE
         printf("%s@local:", current_user);
         PRINT_FONT_BLU
@@ -104,38 +105,83 @@ void start() {
         }
         switch (command_) {
         case null_:
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
+            PRINT_FONT_RED
+            COMMAND_ERROR
+            PRINT_FONT_WHI
             break;
         case cd_: {
             char filename[] = "";
             scanf("%s", filename);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _cd_(filename);
             break;
         }
         case ls_: {
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _ls_();
             break;
         }
         case mkdir_: {
             char foldername[] = "";
             scanf("%s", foldername);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _mkdir_(foldername);
             break;
         }
         case rmdir_: {
             char foldername[] = "";
             scanf("%s", foldername);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _rmdir_(foldername);
             break;
         }
         case touch_: {
             char filename[] = "";
             scanf("%s", filename);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _touch_(filename);
             break;
         }
         case rm_: {
             char filename[] = "";
             scanf("%s", filename);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             if (!check_permission(filename, rm_, permission)) break;
             _touch_(filename);
             break;
@@ -144,17 +190,36 @@ void start() {
             char filename[] = "";
             int owner_mode = 0, other_mode = 0;
             scanf("%s %d %d", filename, &owner_mode, &other_mode);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             if (!check_permission(filename, chmod_, permission)) break;
             _chmod_(filename, owner_mode, other_mode);
             break;
         }
         case tree: {
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _tree_();
             break;
         }
         case open_: {
             char filename[] = "";
             scanf("%s", filename);
+            check_line();
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             if (!check_permission(filename, open_, permission)) break;
             file = _open_(filename);
             break;
@@ -162,6 +227,12 @@ void start() {
         case cat_: {
             char filename[] = "";
             scanf("%s", filename);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             if (!check_permission(filename, cat_, permission)) break;
             _cat_(filename);
             break;
@@ -169,6 +240,12 @@ void start() {
         case write_: {
             char filename[] = "";
             scanf("%s", filename);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             if (!check_permission(filename, write_, permission)) break;
             _write_(filename);
             break;
@@ -176,33 +253,69 @@ void start() {
         case excute_: {
             char filename[] = "";
             scanf("%s", filename);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             if (!check_permission(filename, excute_, permission)) break;
             _excute_(filename);
             break;
         }
         case close_: {
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _close_(file);
             break;
         }
         case login_: {
             char username[NAME_MAX] = "", password[NAME_MAX] = "";
             scanf("%s %s", username, password);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             // printf("%s %s\n", username, password);
             _login_(username, password);
             break;
         }
         case logout_: {
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _logout_();
             break;
         }
         case reg_: {
             char username[NAME_MAX] = "", password[NAME_MAX] = "";
             scanf("%s %s", username, password);
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             // printf("%s %s\n", username, password);
             _reg_(username, password);
             break;
         }
         case exit_: {
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             PRINT_FONT_YEL
             printf("thanks for using!\n");
             PRINT_FONT_WHI
@@ -210,6 +323,12 @@ void start() {
             break;
         }
         case help_: {
+            if (!check_line()) {
+                PRINT_FONT_RED
+                COMMAND_FORMAT_ERROR
+                PRINT_FONT_WHI
+                break;
+            }
             _help_();
             break;
         }
@@ -217,6 +336,23 @@ void start() {
             break;
         }
     }
+}
+
+int check_line() {
+    char *line = NULL;
+    char *first = NULL;
+    size_t len = 0;
+    ssize_t read;
+    read = getline(&line, &len, stdin);
+    first = line;
+    for (int i = 0; i < read; i++, line++) {
+        if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\r') {
+            free(first);
+            return FAILURE;
+        }
+    }
+    if (first) free(first);
+    return SUCCESS;
 }
 
 int main() {
