@@ -2,6 +2,7 @@
 #define API_H
 #include "file.h"
 #include "global.h"
+#include "user.h"
 
 void _cd_(char foldername[]);
 
@@ -28,5 +29,13 @@ void _write_(char filename[]);
 void _excute_(char filename[]);
 
 void _close_(FILE *f);
+
+void _login_(char username[], char password[]);
+
+void _logout_();
+
+void _reg_(char username[], char password[]);
+
+void _help_();
 
 #endif

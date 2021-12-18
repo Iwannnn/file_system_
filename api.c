@@ -141,7 +141,27 @@ void _excute_(char filename[]) {
 }
 
 void _close_(FILE *f) {
+    if (!f) {
+        printf("\n");
+        return;
+    }
     fclose(f);
+}
+
+void _login_(char username[], char password[]) {
+    login(username, password);
+}
+
+void _logout_() {
+    logout();
+}
+
+void _reg_(char username[], char password[]) {
+    reg(username, password);
+}
+
+void _help_() {
+    printf("there is nothing\n");
 }
 
 // int main() {
