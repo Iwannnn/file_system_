@@ -272,7 +272,8 @@ void free_file_node(file_node *file) {
 
 void list_folder() {
     folder_node *child = current_folder->child;
-    printf("folder_list:");
+    PRINT_FONT_CYA
+    printf("folder:");
     if (child) {
         printf("%s", child->foldername);
         while (child->next_sibling) {
@@ -280,12 +281,14 @@ void list_folder() {
             printf(" %s", child->foldername);
         }
     }
+    PRINT_FONT_WHI
     printf("\n");
 }
 
 void list_file() {
     file_node *file = current_folder->file;
-    printf("file_list:");
+    PRINT_FONT_PUR
+    printf("file:");
     if (file) {
         printf("%s", file->filename);
         while (file->next_file) {
@@ -293,6 +296,7 @@ void list_file() {
             printf(" %s", file->filename);
         }
     }
+    PRINT_FONT_WHI
     printf("\n");
 }
 

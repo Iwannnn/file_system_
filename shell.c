@@ -84,16 +84,24 @@ void start() {
         char command[] = "";
         FILE *file = NULL;
         enum COMMAND command_ = null_;
+
         PRINT_FONT_GRE
         printf("%s@local:", current_user);
         PRINT_FONT_BLU
         printf("%s", current_dir);
         PRINT_FONT_WHI
         printf("%c ", permission);
+
         scanf("%s", command);
         command_ = get_command(command);
         // printf("%s\n", command_to_string[command_]);
         // printf("%d\n", command_);
+        if (command_ != login_ && (strcmp(current_user, "") == 0)) {
+            PRINT_FONT_YEL
+            printf("please login first!\n");
+            PRINT_FONT_WHI
+            continue;
+        }
         switch (command_) {
         case null_:
             break;
