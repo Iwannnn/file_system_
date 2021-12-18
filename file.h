@@ -66,6 +66,10 @@ void remove_all_files(file_node *file);
 
 void free_file_node(file_node *file);
 
+int check_folder_permission(folder_node *folder, int sibling_flag); // flag与sibling相关
+
+int check_file_permission(file_node *file);
+
 void list_folder();
 
 void list_file();

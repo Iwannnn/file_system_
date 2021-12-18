@@ -5,9 +5,6 @@ int get_command(char string[]) {
             return i;
         }
     }
-    PRINT_FONT_RED
-    COMMAND_ERROR
-    PRINT_FONT_WHI
     return FAILURE;
 }
 

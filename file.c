@@ -190,6 +190,13 @@ file_node *is_file_exist(char filename[]) {
 }
 
 void remove_folder_node(folder_node *folder) {
+    //检查文件权限
+    if (!check_folder_permission(folder, 1)) {
+        PRINT_FONT_RED
+        PERMISSION_DENIED
+        PRINT_FONT_WHI
+        return;
+    }
     //独立该节点
     folder->parent->child = folder->next_sibling;
     if (folder->prev_sibling) {
@@ -249,7 +256,7 @@ void remove_file_node(file_node *file) {
 
 void remove_all_files(file_node *file) {
     while (file) {
-        printf("file_name:%s\n", file->filename);
+        // printf("file_name:%s\n", file->filename);
         remove_file(file->filename);
         file = file->next_file;
     }
@@ -260,7 +267,7 @@ void remove_file(char filename[]) {
     strcat(tmp, current_dir);
     strcat(tmp, SLASH);
     strcat(tmp, filename);
-    printf("%s %d\n", tmp, remove(tmp));
+    // printf("%s %d\n", tmp, remove(tmp));
 }
 
 void free_file_node(file_node *file) {
@@ -268,6 +275,34 @@ void free_file_node(file_node *file) {
         free_file_node(file->next_file);
     }
     free(file);
+}
+
+int check_folder_permission(folder_node *folder, int sibling_flag) { //删除文件夹的兄弟节点不扫描
+    int child_res = SUCCESS, sibling_res = SUCCESS, file_res = SUCCESS;
+    if (folder->child) {
+        child_res = check_folder_permission(folder->child, 0);
+    }
+    if (folder->next_sibling && sibling_flag) {
+        sibling_res = check_folder_permission(folder->next_sibling, 0);
+    }
+    if (folder->file) {
+        file_res = check_file_permission(folder->file);
+    }
+    // printf("%d", child_res && sibling_res && file_res);
+    return child_res && sibling_res && file_res;
+}
+
+int check_file_permission(file_node *file) {
+    if ((strcmp(current_user, "root") == 0)) {
+        return SUCCESS;
+    }
+    while (file) {
+        if (strcmp(current_user, file->username)) {
+            return FAILURE;
+        }
+        file = file->next_file;
+    }
+    return SUCCESS;
 }
 
 void list_folder() {
