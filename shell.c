@@ -5,14 +5,18 @@ int get_command(char string[]) {
             return i;
         }
     }
-    printf("Command not exist!You can user command help.\n");
+    PRINT_FONT_RED
+    COMMAND_ERROR
+    PRINT_FONT_WHI
     return FAILURE;
 }
 
 int check_permission(char filename[], enum COMMAND command, char permission) {
     file_node *file = is_file_exist(filename);
     if (!file) {
-        printf("\n");
+        PRINT_FONT_RED
+        FILE_NOT_EXIST
+        PRINT_FONT_WHI
         return FAILURE;
     } else {
         if (permission == '#') {
@@ -23,7 +27,9 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
                 if (rwx_permission(command, file->owner_mode)) {
                     return SUCCESS;
                 } else {
-                    printf("\n");
+                    PRINT_FONT_RED
+                    PERMISSION_DENIED
+                    PRINT_FONT_WHI
                     return FAILURE;
                 }
             }
@@ -32,12 +38,16 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
                 if (rwx_permission(command, file->other_mode)) {
                     return SUCCESS;
                 } else {
-                    printf("\n");
+                    PRINT_FONT_RED
+                    PERMISSION_DENIED
+                    PRINT_FONT_WHI
                     return FAILURE;
                 }
             }
             if (command == rm_ || command == chmod_) {
-                printf("\n");
+                PRINT_FONT_RED
+                PERMISSION_DENIED
+                PRINT_FONT_WHI
                 return FAILURE;
             }
         }
@@ -74,7 +84,12 @@ void start() {
         char command[] = "";
         FILE *file = NULL;
         enum COMMAND command_ = null_;
-        printf("%s@local:%s%c ", current_user, current_dir, permission);
+        PRINT_FONT_GRE
+        printf("%s@local:", current_user);
+        PRINT_FONT_BLU
+        printf("%s", current_dir);
+        PRINT_FONT_WHI
+        printf("%c ", permission);
         scanf("%s", command);
         command_ = get_command(command);
         // printf("%s\n", command_to_string[command_]);
@@ -180,7 +195,9 @@ void start() {
             break;
         }
         case exit_: {
-            printf("thanks for using\n");
+            PRINT_FONT_YEL
+            printf("thanks for using!\n");
+            PRINT_FONT_WHI
             exit(0);
             break;
         }

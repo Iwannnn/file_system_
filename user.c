@@ -2,7 +2,9 @@
 
 int login(char username[], char password[]) {
     if (!strcmp(username, "")) {
-        printf("alraedy login\n");
+        PRINT_FONT_RED
+        ALREADY_LOGIN
+        PRINT_FONT_WHI
         return FAILURE;
     }
     if (find_user(username)) {
@@ -10,11 +12,15 @@ int login(char username[], char password[]) {
             strcpy(current_user, username);
             return SUCCESS;
         } else {
-            printf("password error!\n");
+            PRINT_FONT_RED
+            PWD_ERROR
+            PRINT_FONT_WHI
             return FAILURE;
         }
     } else {
-        printf("user does not exist!\n");
+        PRINT_FONT_RED
+        USER_NOT_EXIST
+        PRINT_FONT_WHI
         return FAILURE;
     }
 }
@@ -25,10 +31,14 @@ int reg(char username[], char password[]) {
         user_info = fopen(USERINFO_DIR, USERINFO_MODE);
         fprintf(user_info, "%s %s\n", username, password);
         fclose(user_info);
+        PRINT_FONT_YEL
         printf("register success\n");
+        PRINT_FONT_WHI
         return SUCCESS;
     }
-    printf("user already exist!\n");
+    PRINT_FONT_RED
+    USER_EXIST
+    PRINT_FONT_WHI
     return FAILURE;
 }
 
@@ -37,7 +47,9 @@ int logout() {
         strcpy(current_user, "");
         return SUCCESS;
     }
+    PRINT_FONT_YEL
     printf("user is not logged in!\n");
+    PRINT_FONT_WHI
     return FAILURE;
 }
 

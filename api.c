@@ -10,7 +10,9 @@ void _cd_(char foldername[]) {
             push_folder(foldername);
             current_folder = folder;
         } else {
-            printf("folder not exist!\n");
+            PRINT_FONT_RED
+            FOLDER_NOT_EXIST
+            PRINT_FONT_WHI
         }
     }
 }
@@ -23,7 +25,9 @@ void _ls_() {
 void _mkdir_(char foldername[]) {
     folder_node *folder = is_folder_exist(foldername);
     if (folder) {
-        printf("folder exist!\n");
+        PRINT_FONT_RED
+        FOLDER_ALREADY_EXIST
+        PRINT_FONT_WHI
         return;
     } else {
         create_folder(foldername);
@@ -44,7 +48,9 @@ void _mkdir_(char foldername[]) {
 void _rmdir_(char foldername[]) {
     folder_node *folder = is_folder_exist(foldername);
     if (!folder) {
-        printf("folder not exist!\n");
+        PRINT_FONT_RED
+        FOLDER_NOT_EXIST
+        PRINT_FONT_WHI
     } else {
         remove_folder_node(folder);
         save_filesystem();
@@ -54,7 +60,9 @@ void _rmdir_(char foldername[]) {
 void _touch_(char filename[]) {
     // strcpy(current_user, "test");
     if (is_file_exist(filename)) {
-        printf("filename exist!\n");
+        PRINT_FONT_RED
+        FILE_ALREADY_EXIST
+        PRINT_FONT_WHI
     } else {
         create_file(filename);
         if (!current_folder->file) {
@@ -73,7 +81,9 @@ void _touch_(char filename[]) {
 void _rm_(char filename[]) {
     file_node *file = is_file_exist(filename);
     if (!file) {
-        printf("file not exist!\n");
+        PRINT_FONT_RED
+        FILE_NOT_EXIST
+        PRINT_FONT_WHI
     } else {
         if ((strcmp(filename, current_folder->file->filename) == 0)) { //文件头
             current_folder->file = file->next_file;
@@ -89,10 +99,14 @@ void _chmod_(char filename[], int owner_mode, int other_mode) {
     file_node *file = is_file_exist(filename);
     strcpy(current_user, file->username);
     if (!file) {
-        printf("file not exist\n");
+        PRINT_FONT_RED
+        FILE_NOT_EXIST
+        PRINT_FONT_WHI
     } else {
         if (strcmp(current_user, file->username)) {
-            printf("permission denied!\n");
+            PRINT_FONT_RED
+            PERMISSION_DENIED
+            PRINT_FONT_WHI
         } else {
             change_file_mode(file, other_mode, other_mode);
         }
@@ -107,7 +121,9 @@ void _tree_() {
 FILE *_open_(char filename[]) {
     file_node *file = is_file_exist(filename);
     if (file == NULL) {
-        printf("file not exist!\n");
+        PRINT_FONT_RED
+        FILE_NOT_EXIST
+        PRINT_FONT_WHI
         return NULL;
     }
     return fopen(filename, FILEINFO_READ_MODE);
@@ -127,7 +143,9 @@ void _cat_(char filename[]) {
 void _write_(char filename[]) {
     FILE *file = _open_(filename);
     if (file) {
-        printf("You have permission to write the file.But there is nothing.\n");
+        PRINT_FONT_RED
+        THERE_IS_NOTHING
+        PRINT_FONT_WHI
         _close_(file);
     }
 }
@@ -135,14 +153,18 @@ void _write_(char filename[]) {
 void _excute_(char filename[]) {
     FILE *file = _open_(filename);
     if (file) {
-        printf("You have permission to execute the file.But there is nothing.\n");
+        PRINT_FONT_RED
+        THERE_IS_NOTHING
+        PRINT_FONT_WHI
         _close_(file);
     }
 }
 
 void _close_(FILE *f) {
     if (!f) {
-        printf("\n");
+        PRINT_FONT_RED
+        printf("file not open!\n");
+        PRINT_FONT_WHI
         return;
     }
     fclose(f);
