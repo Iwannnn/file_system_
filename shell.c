@@ -20,7 +20,7 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
         PRINT_FONT_WHI
         return FAILURE;
     } else {
-        if (permission == '#') {
+        if ((strcmp(current_user, "root") == 0)) {
             return SUCCESS;
         }
         if ((strcmp(file->username, current_user) == 0)) { // owner
