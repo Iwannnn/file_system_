@@ -24,7 +24,6 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
             return SUCCESS;
         }
         if ((strcmp(file->username, current_user) == 0)) { // owner
-
             if (command == open_ || command == cat_ || command == write_ || command == excute_) {
                 if (rwx_permission(command, file->owner_mode)) {
                     return SUCCESS;
@@ -35,6 +34,7 @@ int check_permission(char filename[], enum COMMAND command, char permission) {
                     return FAILURE;
                 }
             }
+            return SUCCESS;
         } else { // other
             if (command == open_ || command == cat_ || command == write_ || command == excute_) {
                 if (rwx_permission(command, file->other_mode)) {
@@ -184,7 +184,7 @@ void start() {
                 break;
             }
             if (!check_permission(filename, rm_, permission)) break;
-            _touch_(filename);
+            _rm_(filename);
             break;
         }
         case chmod_: {
@@ -254,13 +254,14 @@ void start() {
         case excute_: {
             char filename[] = "";
             scanf("%s", filename);
+
+            if (!check_permission(filename, excute_, permission)) break;
             if (!check_line()) {
                 PRINT_FONT_RED
                 COMMAND_FORMAT_ERROR
                 PRINT_FONT_WHI
                 break;
             }
-            if (!check_permission(filename, excute_, permission)) break;
             _excute_(filename);
             break;
         }

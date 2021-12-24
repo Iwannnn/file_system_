@@ -256,7 +256,6 @@ void remove_file_node(file_node *file) {
 
 void remove_all_files(file_node *file) {
     while (file) {
-        // printf("file_name:%s\n", file->filename);
         remove_file(file->filename);
         file = file->next_file;
     }
@@ -268,6 +267,7 @@ void remove_file(char filename[]) {
     strcat(tmp, SLASH);
     strcat(tmp, filename);
     // printf("%s %d\n", tmp, remove(tmp));
+    remove(tmp);
 }
 
 void free_file_node(file_node *file) {
