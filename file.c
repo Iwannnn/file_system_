@@ -223,7 +223,7 @@ void remove_folder_node(folder_node *folder) {
 void remove_folder(folder_node *folder) {
     //进入路径
     push_folder(folder->foldername);
-    // printf("%s\n", current_dir);
+
     if (folder->child) {
         remove_folder(folder->child);
     }
@@ -235,6 +235,7 @@ void remove_folder(folder_node *folder) {
     }
     //删除当前文件夹下的文件
     if (folder->file) {
+        // printf("file %s\n", current_dir);
         remove_all_files(folder->file);
     }
     //删除当前文件夹
@@ -251,7 +252,7 @@ void free_folder_node(folder_node *folder) {
         free_folder_node(folder->next_sibling);
     }
     if (folder->file) {
-        remove_all_files(folder->file);
+        free_file_node(folder->file);
     }
     free(folder);
 }
@@ -275,7 +276,7 @@ void remove_file(char filename[]) {
     strcat(tmp, current_dir);
     strcat(tmp, SLASH);
     strcat(tmp, filename);
-    // printf("%s %d\n", tmp, remove(tmp));
+    // printf("rmfile %s\n", tmp);
     remove(tmp);
 }
 
