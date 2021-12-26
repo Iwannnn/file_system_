@@ -1,15 +1,3 @@
 FOLDER disk
-FILE a test 0 0
-FILE b test 1 1
-FILE test root 7 5
-FOLDER s1
-FOLDER c4
-EMPTY
-EMPTY
-FOLDER s2
-EMPTY
-FOLDER ss
-FILE test 12 7 5
-EMPTY
 EMPTY
 EMPTY
