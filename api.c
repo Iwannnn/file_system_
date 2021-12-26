@@ -31,15 +31,17 @@ void _mkdir_(char foldername[]) {
         return;
     } else {
         create_folder(foldername);
+        folder_node *new_folder = create_folder_node(foldername);
+        new_folder->parent = current_folder;
         if (current_folder->child) {
             folder_node *last_folder = current_folder->child;
             while (last_folder->next_sibling) {
                 last_folder = last_folder->next_sibling;
             }
-            last_folder->next_sibling = create_folder_node(foldername);
+            last_folder->next_sibling = new_folder;
 
         } else {
-            current_folder->child = create_folder_node(foldername);
+            current_folder->child = new_folder;
         }
         save_filesystem();
     }
