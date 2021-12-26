@@ -60,7 +60,7 @@
 #define FILE_ALREADY_EXIST printf("file already exist!\n");                                       //文件已存在
 #define FOLDER_NOT_EXIST printf("folder not exist!\n");                                           //文件夹不存在
 #define FOLDER_ALREADY_EXIST printf("folder already exist!\n");                                   //文件夹已存在
-#define COMMAND_ERROR printf("command not exist!you can use command help.\n");                    //命令不存在
+#define COMMAND_ERROR printf("command not found!you can use command help.\n");                    //命令不存在
 #define COMMAND_FORMAT_ERROR printf("command format error!you can use command help.\n");          //命令格式错误
 #define PWD_ERROR printf("password error!\n");                                                    //密码错误
 #define USER_NOT_EXIST printf("user not exist!\n");                                               //账号不存在

@@ -1,3 +1,10 @@
 FOLDER disk
+FILE test root 7 5
+FILE ss root 7 5
+FOLDER ss
+EMPTY
+FOLDER s2s2
+FILE test root 7 5
+EMPTY
 EMPTY
 EMPTY

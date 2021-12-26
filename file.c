@@ -81,8 +81,8 @@ void save_filesystem() {
 }
 
 void LDR(FILE *file_info, folder_node *node) {
-    fprintf(file_info, "FOLDER ");
-    fprintf(file_info, "%s\n", node->foldername);
+    fprintf(file_info, "FOLDER %s\n", node->foldername);
+    // fprintf(file_info, "%s\n", node->foldername);
     // printf("FOLDER %s\n", node->foldername);
     if (node->file) traverse_folder(file_info, node->file);
     if (node->child) {
@@ -100,8 +100,7 @@ void LDR(FILE *file_info, folder_node *node) {
 }
 
 void traverse_folder(FILE *file_info, file_node *node) {
-    fprintf(file_info, "FILE ");
-    fprintf(file_info, "%s %s %d %d\n", node->filename, node->username, node->owner_mode, node->other_mode);
+    fprintf(file_info, "FILE %s %s %d %d\n", node->filename, node->username, node->owner_mode, node->other_mode);
     // printf("FILE %s %s %d %d\n", node->filename, node->username, node->owner_mode, node->other_mode);
     if (node->next_file) {
         traverse_folder(file_info, node->next_file);
@@ -123,6 +122,7 @@ void create_folder(char foldername[]) {
     strcat(tmp, current_dir);
     strcat(tmp, "/");
     strcat(tmp, foldername);
+    // printf("%s\n", tmp);
     mkdir(tmp, 0775);
 }
 
@@ -198,8 +198,12 @@ void remove_folder_node(folder_node *folder) {
         return;
     }
     //独立该节点
-    if (folder->parent->child == folder && folder->next_sibling) {
-        folder->parent->child = folder->next_sibling;
+    if (folder->parent->child == folder) {
+        if (folder->next_sibling) {
+            folder->parent->child = folder->next_sibling;
+        } else {
+            folder->parent->child = NULL;
+        }
     }
     if (folder->prev_sibling) {
         folder->prev_sibling->next_sibling = folder->next_sibling;
@@ -219,7 +223,7 @@ void remove_folder_node(folder_node *folder) {
 void remove_folder(folder_node *folder) {
     //进入路径
     push_folder(folder->foldername);
-    printf("%s\n", current_dir);
+    // printf("%s\n", current_dir);
     if (folder->child) {
         remove_folder(folder->child);
     }
