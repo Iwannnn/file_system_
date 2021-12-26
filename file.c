@@ -198,14 +198,18 @@ void remove_folder_node(folder_node *folder) {
         return;
     }
     //独立该节点
-    folder->parent->child = folder->next_sibling;
+    if (folder->parent->child == folder && folder->next_sibling) {
+        folder->parent->child = folder->next_sibling;
+    }
     if (folder->prev_sibling) {
         folder->prev_sibling->next_sibling = folder->next_sibling;
+        if (folder->next_sibling) {
+            folder->next_sibling->prev_sibling = folder->prev_sibling;
+        }
     }
     folder->next_sibling = NULL;
     folder->prev_sibling = NULL;
     folder->parent = NULL;
-
     //递归删除路径
     remove_folder(folder);
     //递归释放节点
@@ -215,6 +219,7 @@ void remove_folder_node(folder_node *folder) {
 void remove_folder(folder_node *folder) {
     //进入路径
     push_folder(folder->foldername);
+    printf("%s\n", current_dir);
     if (folder->child) {
         remove_folder(folder->child);
     }
