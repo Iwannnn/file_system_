@@ -111,7 +111,7 @@ void _chmod_(char filename[], int owner_mode, int other_mode) {
             PERMISSION_DENIED
             PRINT_FONT_WHI
         } else {
-            change_file_mode(file, other_mode, other_mode);
+            change_file_mode(file, owner_mode, other_mode);
         }
     }
 }

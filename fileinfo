@@ -1,5 +1,7 @@
 FOLDER disk
+FILE test root 2 3
 FOLDER a
+FILE a test 7 5
 EMPTY
 EMPTY
 EMPTY
