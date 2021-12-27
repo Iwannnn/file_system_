@@ -39,6 +39,7 @@ void _mkdir_(char foldername[]) {
                 last_folder = last_folder->next_sibling;
             }
             last_folder->next_sibling = new_folder;
+            new_folder->prev_sibling = last_folder;
 
         } else {
             current_folder->child = new_folder;

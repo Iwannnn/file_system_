@@ -205,10 +205,14 @@ void remove_folder_node(folder_node *folder) {
             folder->parent->child = NULL;
         }
     }
+    // printf("%s\n", folder->prev_sibling->foldername);
     if (folder->prev_sibling) {
-        folder->prev_sibling->next_sibling = folder->next_sibling;
+        // printf("1\n");
         if (folder->next_sibling) {
+            folder->prev_sibling->next_sibling = folder->next_sibling;
             folder->next_sibling->prev_sibling = folder->prev_sibling;
+        } else {
+            folder->prev_sibling->next_sibling = NULL;
         }
     }
     folder->next_sibling = NULL;
